@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>{{ dish_type.name }}</h1>
+  <h2>Dishes of this type:</h2>
+  <ul>
+    {% for dish in dish_type.dish_set.all %}
+      <li>{{ dish.name }}</li>
+    {% empty %}
+      <li>No dishes for this type.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

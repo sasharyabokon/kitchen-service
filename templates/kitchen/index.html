@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1 class="text-success">Kitchen Service</h1>
+  <p>The kitchen is the beating heart of the restaurant</p>
+  <h2>Dynamic content</h2>
+  <p>The Kitchen service has the following record counts:</p>
+  <ul class="list-group">
+    <li class="list-group-item"><strong>Dishes:</strong> {{ num_dish }}</li>
+    <li class="list-group-item"><strong>Dish types:</strong> {{ num_dish_types }}</li>
+    <li class="list-group-item"><strong>Cooks:</strong> {{ num_cooks }}</li>
+  </ul>
+
+  <p class="mt-3">
+    You have visited this page {{ num_visits }} time{{ num_visits|pluralize }}.
+  </p>
+
+{% endblock %}

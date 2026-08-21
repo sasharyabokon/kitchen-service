@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Dishes List</h1>
+
+  {% if dishes %}
+    <ul class="list-group">
+      {% for dish in dishes %}
+        <li class="list-group-item">
+          <strong>{{ dish.name }}</strong>
+          <br>
+          Type: {{ dish.dish_type.name }}
+          <br>
+          Cooked by:
+          {% for cook in dish.cooks.all %}
+            {{ cook.first_name }} {{ cook.last_name }}{% if not forloop.last %}, {% endif %}
+          {% empty %}
+            No cooks assigned
+          {% endfor %}
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No dishes found.</p>
+  {% endif %}
+
+{% endblock %}
