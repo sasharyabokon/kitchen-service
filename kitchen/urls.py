@@ -20,6 +20,7 @@ urlpatterns = [
     path("cooks/<int:pk>/", CookDetailView.as_view(), name="cooks-detail"),
     path("dish/<int:pk>/", DishDetailView.as_view(), name="dish-detail"),
 
+
 ]
 
 app_name = "kitchen"

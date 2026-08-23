@@ -1,3 +1,5 @@
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.http import HttpResponse, HttpRequest
 from django.views.generic import ListView, DetailView
@@ -5,6 +7,7 @@ from django.views.generic import ListView, DetailView
 from kitchen.models import Dish, DishType, Cook
 
 
+@login_required
 def index(request: HttpRequest) -> HttpResponse:
     num_dish = Dish.objects.count()
     num_dish_types = DishType.objects.count()
@@ -22,39 +25,39 @@ def index(request: HttpRequest) -> HttpResponse:
     return render(request, "kitchen/index.html", context=context)
 
 
-class DishTypeListView(ListView):
+class DishTypeListView(LoginRequiredMixin, ListView):
     model = DishType
     template_name = "kitchen/dish_type_list.html"
     context_object_name = "dish_type_list"
 
 
-class DishTypeDetailView(DetailView):
+class DishTypeDetailView(LoginRequiredMixin, DetailView):
     model = DishType
     template_name = "kitchen/dish_type_detail.html"
     context_object_name = "dish_type"
 
 
 
-class DishListView(ListView):
+class DishListView(LoginRequiredMixin, ListView):
     model = Dish
     paginate_by = 10
     queryset = Dish.objects.all().select_related("dish_type")
     context_object_name = "dishes"
 
-class DishDetailView(DetailView):
+class DishDetailView(LoginRequiredMixin, DetailView):
     model = Dish
     template_name = "kitchen/dish_detail.html"
     context_object_name = "dish"
 
 
-class CookListView(ListView):
+class CookListView(LoginRequiredMixin, ListView):
     model = Cook
     paginate_by = 10
     template_name = "kitchen/cooks_list.html"
     context_object_name = "cooks"
 
 
-class CookDetailView(DetailView):
+class CookDetailView(LoginRequiredMixin, DetailView):
     model = Cook
     template_name = "kitchen/cooks_detail.html"
     context_object_name = "cook"
