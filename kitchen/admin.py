@@ -22,6 +22,7 @@ class CookAdmin(UserAdmin):
                 "Additional info",
                 {
                     "fields": (
+                        "email",
                         "first_name",
                         "last_name",
                         "years_of_experience",
