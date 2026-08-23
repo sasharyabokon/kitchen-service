@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>{{ dish.name }}</h1>
+  <p><strong>Description:</strong> {{ dish.description }}</p>
+  <p><strong>Price:</strong> {{ dish.price }} </p>
+  <p><strong>Dish type:</strong> {{ dish.dish_type.name }}</p>
+
+  <h3>Cooks:</h3>
+  <ul>
+    {% for cook in dish.cooks.all %}
+      <li>
+        <a href="{% url 'kitchen:cooks-detail' cook.id %}">
+          {{ cook.first_name }} {{ cook.last_name }}
+        </a>
+      </li>
+    {% empty %}
+      <li>No cooks assigned</li>
+    {% endfor %}
+  </ul>
+
+  <p><a href="{% url 'kitchen:dish-list' %}">Back to dish list</a></p>
+{% endblock %}

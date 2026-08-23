@@ -6,7 +6,7 @@
     <ul class="list-group">
       {% for cook in cooks %}
         <li class="list-group-item">
-          <a href="{% url 'kitchen:cooks_detail' cook.id %}">
+          <a href="{% url 'kitchen:cooks-detail' cook.id %}">
             {{ cook.first_name }} {{ cook.last_name }}
           </a>
         </li>

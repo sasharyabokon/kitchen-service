@@ -7,21 +7,15 @@
     <ul class="list-group">
       {% for dish in dishes %}
         <li class="list-group-item">
-          <strong>{{ dish.name }}</strong>
+          <a href="{% url 'kitchen:dish-detail' dish.id %}">
+            <strong>{{ dish.name }}</strong>
+          </a>
           <br>
-          Type: {{ dish.dish_type.name }}
-          <br>
-          Cooked by:
-          {% for cook in dish.cooks.all %}
-            {{ cook.first_name }} {{ cook.last_name }}{% if not forloop.last %}, {% endif %}
-          {% empty %}
-            No cooks assigned
-          {% endfor %}
+          {{ dish.description }}
         </li>
       {% endfor %}
     </ul>
   {% else %}
     <p>No dishes found.</p>
   {% endif %}
-
 {% endblock %}
