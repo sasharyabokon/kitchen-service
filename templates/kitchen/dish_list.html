@@ -1,21 +1,39 @@
 {% extends "base.html" %}
-
 {% block content %}
-  <h1>Dishes List</h1>
-
-  {% if dishes %}
-    <ul class="list-group">
-      {% for dish in dishes %}
-        <li class="list-group-item">
+  <h1>Dish List
+      <a style="float: right" href="{% url 'kitchen:dish-create' %}" class="btn btn-success">+</a>
+  </h1>
+  <table class="table">
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Cooks</th>
+      <th>Actions</th>
+    </tr>
+    {% for dish in dishes %}
+      <tr>
+        <td>{{ dish.id }}</td>
+        <td>
           <a href="{% url 'kitchen:dish-detail' dish.id %}">
-            <strong>{{ dish.name }}</strong>
+            {{ dish.name }}
           </a>
-          <br>
-          {{ dish.description }}
-        </li>
-      {% endfor %}
-    </ul>
-  {% else %}
-    <p>No dishes found.</p>
-  {% endif %}
+        </td>
+        <td>{{ dish.dish_type.name }}</td>
+        <td>
+          {% for cook in dish.cooks.all %}
+            {{ cook.username }}{% if not forloop.last %}, {% endif %}
+          {% endfor %}
+        </td>
+        <td>
+          <a href="{% url 'kitchen:dish-update' dish.id %}"?page={{ page_obj.number }} class="btn btn-primary">Update</a>
+          <a href="{% url 'kitchen:dish-delete' dish.id %}" class="btn btn-danger">Delete</a>
+        </td>
+      </tr>
+    {% empty %}
+      <tr>
+        <td colspan="5">No dishes found.</td>
+      </tr>
+    {% endfor %}
+  </table>
 {% endblock %}

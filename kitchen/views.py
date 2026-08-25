@@ -64,6 +64,27 @@ class DishListView(LoginRequiredMixin, ListView):
     queryset = Dish.objects.all().select_related("dish_type")
     context_object_name = "dishes"
 
+
+class DishCreateView(LoginRequiredMixin, CreateView):
+    model = Dish
+    fields = "__all__"
+    success_url = reverse_lazy("kitchen:dish-list")
+    template_name = "kitchen/dish_form.html"
+
+
+class DishUpdateView(LoginRequiredMixin, UpdateView):
+    model = Dish
+    fields = "__all__"
+    success_url = reverse_lazy("kitchen:dish-list")
+    template_name = "kitchen/dish_form.html"
+
+
+class DishDeleteView(LoginRequiredMixin, DeleteView):
+    model = Dish
+    success_url = reverse_lazy("kitchen:dish-list")
+    template_name = "kitchen/dish_confirm_delete.html"
+
+
 class DishDetailView(LoginRequiredMixin, DetailView):
     model = Dish
     template_name = "kitchen/dish_detail.html"
