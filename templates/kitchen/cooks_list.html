@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h1>Cooks List</h1>
+  <h1>Cooks List <a style="float: right" href="{% url 'kitchen:cooks-create' %}" class="btn btn-success">+</a></h1>
   {% if cooks %}
     <ul class="list-group">
       {% for cook in cooks %}
