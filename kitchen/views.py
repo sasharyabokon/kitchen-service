@@ -106,3 +106,14 @@ class CookDetailView(LoginRequiredMixin, generic.DetailView):
     model = Cook
     template_name = "kitchen/cooks_detail.html"
     context_object_name = "cook"
+
+
+class CookUpdateView(LoginRequiredMixin, generic.UpdateView):
+    model = Cook
+    form_class = CookCreationForm
+    success_url = reverse_lazy("kitchen:cooks-list")
+
+class CookDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = Cook
+    success_url = reverse_lazy("kitchen:cooks-list")
+    template_name = "kitchen/cook_confirm_delete.html"

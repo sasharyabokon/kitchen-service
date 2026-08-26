@@ -20,3 +20,9 @@ class DishForm(forms.ModelForm):
     class Meta:
         model = Dish
         fields = "__all__"
+
+
+class CookUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Cook
+        fields = ["username", "first_name", "last_name", "years_of_experience"]
