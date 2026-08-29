@@ -26,3 +26,16 @@ class CookUpdateForm(forms.ModelForm):
     class Meta:
         model = Cook
         fields = ["username", "first_name", "last_name", "years_of_experience"]
+
+
+class DishSearchForm(forms.Form):
+    name = forms.CharField(
+        max_length=255,
+        required=False,
+        label="",
+        widget=forms.TextInput(
+            attrs={
+                "placeholder": "Search by name"
+            }
+        )
+    )

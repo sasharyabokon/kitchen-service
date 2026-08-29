@@ -1,8 +1,15 @@
 {% extends "base.html" %}
+{% load crispy_forms_filters %}
 {% block content %}
   <h1>Dish List
       <a style="float: right" href="{% url 'kitchen:dish-create' %}" class="btn btn-success">+ Add dish</a>
   </h1>
+   <form method="get" action="" class="d-flex align-items-center gap-2 mb-3">
+     <div style="width: 300px; margin-bottom: 0;">
+     {{ search_form|crispy }}
+    </div>
+    <button class="btn btn-secondary" type="submit" style="margin-top: -16px;">🔎</button>
+   </form>
   <table class="table">
     <tr>
       <th>ID</th>
