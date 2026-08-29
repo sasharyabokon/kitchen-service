@@ -2,7 +2,7 @@ from django.contrib.auth import forms, get_user_model
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 
-from kitchen.models import Cook, Dish
+from kitchen.models import Cook, Dish, Ingredient
 
 
 class CookCreationForm(UserCreationForm):
@@ -14,6 +14,11 @@ class CookCreationForm(UserCreationForm):
 class DishForm(forms.ModelForm):
     cooks = forms.ModelMultipleChoiceField(
         queryset=get_user_model().objects.all(),
+        widget=forms.CheckboxSelectMultiple(),
+        required=False
+    )
+    ingredients = forms.ModelMultipleChoiceField(
+        queryset=Ingredient.objects.all(),
         widget=forms.CheckboxSelectMultiple(),
         required=False
     )

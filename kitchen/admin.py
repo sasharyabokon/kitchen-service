@@ -1,7 +1,8 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-from kitchen.models import DishType, Dish, Cook
+from kitchen.models import DishType, Dish, Cook, Ingredient
+
 
 @admin.register(DishType)
 class DishTypeAdmin(admin.ModelAdmin):
@@ -31,3 +32,10 @@ class CookAdmin(UserAdmin):
             ),
         )
     )
+
+
+@admin.register(Ingredient)
+class IngredientAdmin(admin.ModelAdmin):
+    search_fields = ("name",)
+
+
