@@ -1,27 +1,35 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h1>
-    Cooks List
-    <a style="float: right" href="{% url 'kitchen:cooks-create' %}" class="btn btn-success">+ Add Cook</a>
-  </h1>
-  {% if cooks %}
-    <ul class="list-group">
-      {% for cook in cooks %}
-        <li class="list-group-item d-flex justify-content-between align-items-center">
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h1 class="m-0">Cooks List</h1>
+  <a class="btn btn-success" href="{% url 'kitchen:cooks-create' %}">+ Add Cook</a>
+</div>
+
+{% if cooks %}
+  <ul class="list-group">
+    {% for cook in cooks %}
+      <li class="list-group-item d-flex align-items-center justify-content-between">
+        <div class="d-flex align-items-center">
+          <div class="me-3 rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center" style="width:44px; height:44px; font-weight:600;">
+            {{ cook.first_name|default_if_none:""|slice:":1" }}{{ cook.last_name|default_if_none:""|slice:":1" }}
+          </div>
           <div>
-            <a href="{% url 'kitchen:cooks-detail' cook.id %}">
+            <a href="{% url 'kitchen:cooks-detail' cook.id %}" class="fw-bold text-decoration-none text-dark">
               {{ cook.first_name }} {{ cook.last_name }}
             </a>
+            <div class="text-muted small">@{{ cook.username }}</div>
           </div>
-          <div>
-            <a href="{% url 'kitchen:cook-update' cook.id %}" class="btn btn-sm btn-primary">Update</a>
-            <a href="{% url 'kitchen:cook-delete' cook.id %}" class="btn btn-sm btn-danger">Delete</a>
-          </div>
-        </li>
-      {% endfor %}
-    </ul>
-  {% else %}
-    <p>No cooks found.</p>
-  {% endif %}
+        </div>
+
+        <div class="btn-group">
+          <a href="{% url 'kitchen:cook-update' cook.id %}" class="btn btn-sm btn-outline-primary">Edit</a>
+          <a href="{% url 'kitchen:cook-delete' cook.id %}" class="btn btn-sm btn-outline-danger">Delete</a>
+        </div>
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>No cooks found.</p>
+{% endif %}
 {% endblock %}

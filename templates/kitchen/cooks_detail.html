@@ -1,19 +1,61 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h1>{{ cook.first_name }} {{ cook.last_name }}</h1>
+<div class="container py-4">
+  <nav aria-label="breadcrumb" class="mb-3">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'kitchen:cooks-list' %}">Cooks</a></li>
+      <li class="breadcrumb-item active" aria-current="page">{{ cook.first_name }} {{ cook.last_name }}</li>
+    </ol>
+  </nav>
 
-  <p><strong>Username:</strong> {{ cook.username }}</p>
-  <p><strong>Years of experience:</strong> {{ cook.years_of_experience }}</p>
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <div class="d-flex justify-content-between align-items-start mb-3">
+        <div>
+          <h1 class="h3 mb-1">{{ cook.first_name }} {{ cook.last_name }}</h1>
+          <div class="text-muted small">@{{ cook.username }}</div>
+          {% if cook.years_of_experience %}
+            <div class="mt-2"><span class="badge bg-success">Experience: {{ cook.years_of_experience }} yrs</span></div>
+          {% endif %}
+        </div>
+        <div class="text-end">
+          <a href="{% url 'kitchen:cook-update' cook.id %}" class="btn btn-sm btn-outline-primary me-2">Edit</a>
+          <a href="{% url 'kitchen:cook-delete' cook.id %}" class="btn btn-sm btn-outline-danger">Delete</a>
+        </div>
+      </div>
 
-  <h2>Dishes cooked:</h2>
-  <ul>
-    {% for dish in cook.dishes.all %}
-      <li>
-        {{ dish.name }} ({{ dish.dish_type.name }})
-      </li>
-    {% empty %}
-      <li>No dishes assigned to this cook.</li>
-    {% endfor %}
-  </ul>
+      {% if cook.bio %}
+        <p class="text-muted mb-4">{{ cook.bio }}</p>
+      {% endif %}
+
+      <h5 class="mb-3">Dishes cooked</h5>
+
+      {% if cook.dishes.exists %}
+        <div class="list-group mb-3">
+          {% for dish in cook.dishes.all %}
+            <a href="{% url 'kitchen:dish-detail' dish.id %}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-start">
+              <div>
+                <div class="fw-bold">{{ dish.name }}</div>
+                {% if dish.description %}
+                  <div class="text-muted small">{{ dish.description|truncatechars:80 }}</div>
+                {% endif %}
+                {% if dish.dish_type %}
+                  <div class="text-muted small mt-1"><span class="badge bg-primary">{{ dish.dish_type.name }}</span></div>
+                {% endif %}
+              </div>
+              <div class="text-muted small ms-3">View</div>
+            </a>
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="alert alert-secondary" role="alert">No dishes assigned to this cook.</div>
+      {% endif %}
+
+      <div class="d-flex gap-2">
+        <a href="{% url 'kitchen:cooks-list' %}" class="btn btn-outline-secondary">Back to cooks</a>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}

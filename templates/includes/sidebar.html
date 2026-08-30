@@ -1,23 +1,57 @@
-<ul class="sidebar-nav list-group">
-  {% if user.is_authenticated %}
-    <li class="list-group-item">
-      User: <a href="{{ user.get_absolute_url }}">{{ user.get_username }}</a>
-    </li>
-    <li class="list-group-item">
-      <form method="post" action="{% url 'logout' %}">
-        {% csrf_token %}
-        <button type="submit" class="btn btn-link">Logout</button>
-      </form>
-    </li>
-  {% else %}
-    <li class="list-group-item">
-      <a href="{% url 'login' %}?next={{request.path}}">Login</a>
-    </li>
-  {% endif %}
-  <br>
-  <li class="list-group-item"><a href="{% url 'kitchen:index' %}">Home</a></li>
-  <li class="list-group-item"><a href="{% url 'kitchen:dish-list' %}">Dishes</a></li>
-  <li class="list-group-item"><a href="{% url 'kitchen:dish-type-list' %}">Dish types</a></li>
-  <li class="list-group-item"><a href="{% url 'kitchen:cooks-list' %}">Cooks</a></li>
-  <li class="list-group-item"><a href="{% url 'kitchen:ingredient-list' %}">Ingredients</a></li>
-</ul>
+<div class="card">
+  <div class="card-body p-2">
+    {% if user.is_authenticated %}
+      <!-- Профіль: весь рядок клікабельний -->
+      <a href="{{ user.get_absolute_url }}" class="d-flex align-items-center gap-3 text-decoration-none text-dark p-2 rounded list-group-item-action">
+        <div style="width:56px;height:56px;border-radius:50%;background:#6c757d;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:18px;">
+          {{ user.get_username|slice:":1"|upper }}
+        </div>
+        <div class="flex-grow-1">
+          <div class="fw-bold small mb-0">{{ user.get_username }}</div>
+          <div class="text-muted small">View profile</div>
+        </div>
+      </a>
+
+      <!-- Logout під профілем, але перед навігацією -->
+      <div class="mt-2 mb-3 px-2">
+        <form method="post" action="{% url 'logout' %}">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-sm btn-outline-secondary w-100">Logout</button>
+        </form>
+      </div>
+    {% else %}
+      <a href="{% url 'login' %}?next={{ request.path }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center text-decoration-none p-2">
+        <span>Login</span>
+        <span class="text-muted small">Sign in</span>
+      </a>
+    {% endif %}
+
+    <!-- Навігація -->
+    <div class="list-group mt-1">
+      <a href="{% url 'kitchen:index' %}" class="list-group-item list-group-item-action d-flex align-items-center text-decoration-none text-dark">
+        <span class="me-2"><i class="bi bi-house-door-fill"></i></span>
+        <span>Home</span>
+      </a>
+
+      <a href="{% url 'kitchen:dish-list' %}" class="list-group-item list-group-item-action d-flex align-items-center text-decoration-none text-dark">
+        <span class="me-2"><i class="bi bi-card-list"></i></span>
+        <span>Dishes</span>
+      </a>
+
+      <a href="{% url 'kitchen:dish-type-list' %}" class="list-group-item list-group-item-action d-flex align-items-center text-decoration-none text-dark">
+        <span class="me-2"><i class="bi bi-tags-fill"></i></span>
+        <span>Dish types</span>
+      </a>
+
+      <a href="{% url 'kitchen:cooks-list' %}" class="list-group-item list-group-item-action d-flex align-items-center text-decoration-none text-dark">
+        <span class="me-2"><i class="bi bi-person-badge-fill"></i></span>
+        <span>Cooks</span>
+      </a>
+
+      <a href="{% url 'kitchen:ingredient-list' %}" class="list-group-item list-group-item-action d-flex align-items-center text-decoration-none text-dark">
+        <span class="me-2"><i class="bi bi-leaf-fill"></i></span>
+        <span>Ingredients</span>
+      </a>
+    </div>
+  </div>
+</div>

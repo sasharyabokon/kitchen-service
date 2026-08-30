@@ -1,32 +1,96 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h1>{{ dish.name }}</h1>
-  <p><strong>Description:</strong> {{ dish.description }}</p>
-  <p><strong>Price:</strong> {{ dish.price }}</p>
-  <p><strong>Dish type:</strong> {{ dish.dish_type.name }}</p>
+<div class="container py-4">
+  <nav aria-label="breadcrumb" class="mb-3">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'kitchen:dish-list' %}">Dishes</a></li>
+      <li class="breadcrumb-item active" aria-current="page">{{ dish.name }}</li>
+    </ol>
+  </nav>
 
-  <h3>Cooks:</h3>
-  <ul>
-    {% for cook in dish.cooks.all %}
-      <li>
-        <a href="{% url 'kitchen:cooks-detail' cook.id %}">
-          {{ cook.first_name }} {{ cook.last_name }}
-        </a>
-      </li>
-    {% empty %}
-      <li>No cooks assigned</li>
-    {% endfor %}
-  </ul>
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <div class="d-flex justify-content-between align-items-start mb-3">
+        <div>
+          <h1 class="h3 mb-1">{{ dish.name }}</h1>
+          <div class="d-flex gap-2 align-items-center">
+            {% if dish.dish_type %}
+              <span class="badge bg-primary text-white">{{ dish.dish_type.name }}</span>
+            {% endif %}
+          </div>
+        </div>
+        <div class="text-end">
+          <a href="{% url 'kitchen:dish-update' dish.id %}" class="btn btn-sm btn-outline-primary me-2">Edit</a>
+          <a href="{% url 'kitchen:dish-delete' dish.id %}" class="btn btn-sm btn-outline-danger">Delete</a>
+        </div>
+      </div>
 
-  <h3>Ingredients:</h3>
-  <ul>
-    {% for ingredient in dish.ingredients.all %}
-      <li>{{ ingredient.name }}</li>
-    {% empty %}
-      <li>No ingredients</li>
-    {% endfor %}
-  </ul>
+      {% if dish.description %}
+        <p class="text-muted mb-4">{{ dish.description }}</p>
+      {% endif %}
 
-  <p><a href="{% url 'kitchen:dish-list' %}">Back to dish list</a></p>
+      <div class="row g-4">
+        <div class="col-12 col-md-8">
+          <div class="mb-4">
+            <h5 class="mb-2">Cooks</h5>
+            {% if dish.cooks.exists %}
+              <ul class="list-unstyled mb-0">
+                {% for cook in dish.cooks.all %}
+                  <li class="mb-2">
+                    <a href="{% url 'kitchen:cooks-detail' cook.id %}" class="text-decoration-none">
+                      <strong class="me-1">{{ cook.first_name }} {{ cook.last_name }}</strong>
+                      <span class="text-muted small">@{{ cook.username }}</span>
+                    </a>
+                  </li>
+                {% endfor %}
+              </ul>
+            {% else %}
+              <div class="text-muted">No cooks assigned</div>
+            {% endif %}
+          </div>
+
+          <div>
+            <h5 class="mb-2">Ingredients</h5>
+            {% if dish.ingredients.exists %}
+              <div class="d-flex flex-wrap gap-2">
+                {% for ingredient in dish.ingredients.all %}
+                  <span class="badge bg-light border text-dark">{{ ingredient.name }}</span>
+                {% endfor %}
+              </div>
+            {% else %}
+              <div class="text-muted">No ingredients</div>
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="col-12 col-md-4">
+          <div class="border rounded p-3 h-100 d-flex flex-column justify-content-between bg-white">
+            <div>
+              <h6 class="mb-2">Details</h6>
+              <dl class="row mb-0">
+                <dt class="col-6 text-muted">Dish ID</dt>
+                <dd class="col-6">{{ dish.id }}</dd>
+
+                <dt class="col-6 text-muted">Price</dt>
+                <dd class="col-6">
+                  {% if dish.price %}
+                    <span class="fw-bold text-dark">{{ dish.price }} UAH</span>
+                  {% else %}
+                    —
+                  {% endif %}
+                </dd>
+              </dl>
+            </div>
+
+            <div class="mt-3">
+              <a href="{% url 'kitchen:dish-list' %}" class="btn btn-sm btn-outline-secondary w-100 mb-2">Back to dishes</a>
+              <a href="{% url 'kitchen:dish-create' %}" class="btn btn-sm btn-success w-100">Create new dish</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}
