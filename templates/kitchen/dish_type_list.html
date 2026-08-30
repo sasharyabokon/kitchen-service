@@ -1,46 +1,59 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="d-flex justify-content-between align-items-center mb-4">
-  <h1 class="m-0">Dish Types</h1>
-  <a class="btn btn-success" href="{% url 'kitchen:dish-type-create' %}">+ Add dish type</a>
-</div>
+<div class="container py-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="m-0" style="font-size: 28px; font-weight: 700; font-family: 'Open Sans', sans-serif;">Dish Types</h1>
+    <a class="btn btn-success fw-semibold shadow-sm" href="{% url 'kitchen:dish-type-create' %}" style="font-family: 'Open Sans', sans-serif;">+ Add dish type</a>
+  </div>
 
-{% if dish_type_list %}
-  <div class="row g-3">
-    {% for dish_type in dish_type_list %}
-      <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-        <div class="card h-100 shadow-sm">
-          <div class="card-body d-flex flex-column">
-            <div class="d-flex justify-content-between align-items-start mb-2">
-              <h5 class="card-title mb-0">
-                <a href="{% url 'kitchen:dish-type-detail' dish_type.id %}" class="text-decoration-none text-dark">
-                  {{ dish_type.name }}
-                </a>
-              </h5>
-            </div>
-
-            {% if dish_type.description %}
-              <p class="card-text text-muted small mb-3">{{ dish_type.description|truncatechars:80 }}</p>
-            {% endif %}
-
-            <div class="mt-auto d-flex justify-content-between align-items-center">
-              <div class="text-muted small">
-                <strong>{{ dish_type.dish_set.count }}</strong> dishes
+  {% if dish_type_list %}
+    <div class="row g-3">
+      {% for dish_type in dish_type_list %}
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+          <div class="card h-100 shadow-sm border-0 rounded-4 dish-type-card">
+            <div class="card-body d-flex flex-column p-4">
+              <div class="d-flex justify-content-between align-items-start mb-2">
+                <h5 class="card-title mb-0" style="font-family: 'Open Sans', sans-serif; font-weight: 600; font-size: 18px;">
+                  <a href="{% url 'kitchen:dish-type-detail' dish_type.id %}" class="text-decoration-none text-dark">
+                    {{ dish_type.name }}
+                  </a>
+                </h5>
               </div>
-              <div class="btn-group">
-                <a href="{% url 'kitchen:dish-type-update' pk=dish_type.id %}" class="btn btn-sm btn-outline-primary">Edit</a>
-                <a href="{% url 'kitchen:dish-type-delete' pk=dish_type.id %}" class="btn btn-sm btn-outline-danger">Delete</a>
+
+              {% if dish_type.description %}
+                <p class="card-text text-muted mb-3" style="font-size: 14px; font-family: 'Open Sans', sans-serif;">{{ dish_type.description|truncatechars:80 }}</p>
+              {% endif %}
+
+              <div class="mt-auto d-flex justify-content-between align-items-center pt-3">
+                <div style="font-size: 13px; color: #6B7280; font-family: 'Open Sans', sans-serif;">
+                  <span>{{ dish_type.dish_set.count }}</span> dishes
+                </div>
+                <div class="action-buttons d-flex gap-2">
+                  <a href="{% url 'kitchen:dish-type-update' pk=dish_type.id %}" class="text-decoration-none text-secondary fw-semibold" style="font-size: 13px; font-family: 'Open Sans', sans-serif;">Edit</a>
+                  <span class="text-muted">·</span>
+                  <a href="{% url 'kitchen:dish-type-delete' pk=dish_type.id %}" class="text-decoration-none text-danger fw-semibold" style="font-size: 13px; font-family: 'Open Sans', sans-serif;">Delete</a>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    {% endfor %}
-  </div>
-{% else %}
-  <div class="alert alert-secondary" role="alert">
-    No dish types found.
-  </div>
-{% endif %}
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="alert alert-secondary rounded-4 border-0 py-4 text-center" role="alert" style="font-family: 'Open Sans', sans-serif;">
+      No dish types found.
+    </div>
+  {% endif %}
+</div>
+
+<style>
+  .dish-type-card .action-buttons {
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+  }
+  .dish-type-card:hover .action-buttons {
+    opacity: 1;
+  }
+</style>
 {% endblock %}

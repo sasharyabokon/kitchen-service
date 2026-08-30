@@ -1,38 +1,136 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Kitchen Service</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>{% block title %}Kitchen Service{% endblock %}</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+  <link href="{% static 'assets/css/nucleo-icons.css' %}" rel="stylesheet" />
+  <link href="{% static 'assets/css/nucleo-svg.css' %}" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+
+  <link id="pagestyle" href="{% static 'assets/css/soft-ui-dashboard.css' %}" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg-main: #F9FAFB;
+      --card-bg: #FFFFFF;
+      --text-main: #1F2937;
+      --text-muted: #4B5563;
+      --border-color: #E5E7EB;
+      --primary-green: #10B981;
+      --danger-red: #EF4444;
+    }
+
+    body {
+      background-color: var(--bg-main) !important;
+      color: var(--text-main) !important;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;
+    }
+
+    .container-fluid .card:not(.page-header .card):not([data-background-color] .card):not(.position-relative .card) {
+      background-color: var(--card-bg) !important;
+      border-color: var(--border-color) !important;
+      border-radius: 1rem !important;
+    }
+
+    .breadcrumb {
+      background-color: transparent !important;
+      padding: 0 !important;
+    }
+    .breadcrumb-item a {
+      color: var(--text-muted) !important;
+      text-decoration: none !important;
+    }
+    .breadcrumb-item.active {
+      color: var(--text-main) !important;
+      font-weight: 500;
+    }
+
+    .bg-gradient-warning, .btn-warning, .bg-warning,
+    [class*="bg-gradient-warning"], [class*="btn-warning"], [class*="bg-warning"],
+    .btn.bg-gradient-warning, .btn.btn-warning,
+    form button[type="submit"], form .btn {
+      background: #10B981 !important;
+      background-image: none !important;
+      border-color: #10B981 !important;
+      color: #ffffff !important;
+    }
+    .btn-warning:hover, .btn-outline-warning:hover,
+    [class*="btn-warning"]:hover, [class*="btn-outline-warning"]:hover,
+    form button[type="submit"]:hover, form .btn:hover {
+      background: #059669 !important;
+      border-color: #059669 !important;
+      color: #ffffff !important;
+    }
+    .text-warning, [class*="text-warning"] {
+      color: #10B981 !important;
+    }
+    .btn-outline-warning, [class*="btn-outline-warning"] {
+      color: #10B981 !important;
+      border-color: #10B981 !important;
+      background-color: transparent !important;
+    }
+    .badge.bg-gradient-warning, .badge.bg-warning {
+      background-color: #F3F4F6 !important;
+      color: #374151 !important;
+      border: 1px solid #E5E7EB !important;
+    }
+    .sidenav .nav-item .nav-link.active .nav-link-text {
+      color: #ffffff !important;
+    }
+    .sidenav .nav-item .nav-link.active .icon i {
+      color: #344767 !important;
+    }
+
+    form.input-group, .input-group {
+      display: flex;
+      align-items: center;
+    }
+    form.input-group .btn, .input-group .btn {
+      margin-bottom: 0 !important;
+      height: 100%;
+    }
+    .card.bg-dark, .card[data-background-color="dark"] {
+      background-color: #0F172A !important;
+      color: #ffffff !important;
+    }
+    .card.bg-dark *, .card[data-background-color="dark"] * {
+      color: #ffffff !important;
+    }
+    .card.bg-dark .btn, .card[data-background-color="dark"] .btn {
+      border-color: #475569 !important;
+      color: #ffffff !important;
+      background-color: #334155 !important;
+    }
+    a:hover {
+      color: #10B981 !important;
+    }
+  </style>
 </head>
-<body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container">
-      <a class="navbar-brand" href="#">Kitchen Service</a>
-    </div>
-  </nav>
 
-  <div class="container-fluid my-4">
-    <div class="row">
-      <div class="col-sm-2">
-        {% block sidebar %}
-          {% include "includes/sidebar.html" %}
-        {% endblock %}
-      </div>
+<body class="g-sidenav-show">
 
-      <div class="col-sm-10">
-        {% block content %}{% endblock %}
-      {% block pagination %}
-        {% include "includes/pagination.html" %}
+  {% include "includes/sidebar.html" %}
+
+  <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg">
+
+    <div class="container-fluid py-4">
+      {% block content %}
       {% endblock %}
-      </div>
+
+      {% include "includes/pagination.html" %}
     </div>
-  </div>
 
-  <footer class="bg-dark text-white text-center py-3">
-    <p>&copy; 2026 Kitchen Service</p>
-  </footer>
+  </main>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="{% static 'assets/js/core/popper.min.js' %}"></script>
+  <script src="{% static 'assets/js/core/bootstrap.min.js' %}"></script>
+  <script src="{% static 'assets/js/plugins/perfect-scrollbar.min.js' %}"></script>
+  <script src="{% static 'assets/js/plugins/smooth-scrollbar.min.js' %}"></script>
+  <script src="{% static 'assets/js/soft-ui-dashboard.min.js' %}"></script>
 </body>
 </html>

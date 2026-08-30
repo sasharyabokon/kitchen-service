@@ -1,92 +1,105 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container py-4">
+<div class="container py-4" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;">
   <nav aria-label="breadcrumb" class="mb-3">
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="{% url 'kitchen:dish-list' %}">Dishes</a></li>
-      <li class="breadcrumb-item active" aria-current="page">{{ dish.name }}</li>
+    <ol class="breadcrumb" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;">
+      <li class="breadcrumb-item"><a href="{% url 'kitchen:dish-list' %}" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;">Dishes</a></li>
+      <li class="breadcrumb-item active" aria-current="page" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;">{{ dish.name }}</li>
     </ol>
   </nav>
 
-  <div class="card shadow-sm">
-    <div class="card-body">
-      <div class="d-flex justify-content-between align-items-start mb-3">
-        <div>
-          <h1 class="h3 mb-1">{{ dish.name }}</h1>
-          <div class="d-flex gap-2 align-items-center">
-            {% if dish.dish_type %}
-              <span class="badge bg-primary text-white">{{ dish.dish_type.name }}</span>
-            {% endif %}
-          </div>
-        </div>
-        <div class="text-end">
-          <a href="{% url 'kitchen:dish-update' dish.id %}" class="btn btn-sm btn-outline-primary me-2">Edit</a>
-          <a href="{% url 'kitchen:dish-delete' dish.id %}" class="btn btn-sm btn-outline-danger">Delete</a>
+  <div class="card border-0 shadow-sm border-radius-xl p-4 mb-4" style="background-color: #f8f9fa !important; border-radius: 1rem; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;">
+    <div class="d-flex justify-content-between align-items-start mb-3">
+      <div>
+        <h1 class="mb-1 text-dark" style="font-size: 28px; font-weight: 700; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;">{{ dish.name }}</h1>
+        <div class="d-flex gap-2 align-items-center mt-2">
+          {% if dish.dish_type %}
+            <span class="badge text-dark rounded-pill px-3 py-2 fw-normal border shadow-sm" style="background-color: #ffffff; font-size: 13px;">{{ dish.dish_type.name }}</span>
+          {% endif %}
         </div>
       </div>
 
-      {% if dish.description %}
-        <p class="text-muted mb-4">{{ dish.description }}</p>
-      {% endif %}
+      <div class="d-flex align-items-center gap-3">
+        <a href="{% url 'kitchen:dish-update' dish.id %}" style="border: none !important; background: transparent !important; box-shadow: none !important; padding: 0 !important; color: #343a40 !important; font-weight: 700; text-decoration: none;">Edit</a>
+        <a href="{% url 'kitchen:dish-delete' dish.id %}" style="border: none !important; background: transparent !important; box-shadow: none !important; padding: 0 !important; color: #ea0606 !important; font-weight: 700; text-decoration: none;">Delete</a>
+      </div>
+    </div>
 
-      <div class="row g-4">
-        <div class="col-12 col-md-8">
-          <div class="mb-4">
-            <h5 class="mb-2">Cooks</h5>
-            {% if dish.cooks.exists %}
-              <ul class="list-unstyled mb-0">
-                {% for cook in dish.cooks.all %}
-                  <li class="mb-2">
-                    <a href="{% url 'kitchen:cooks-detail' cook.id %}" class="text-decoration-none">
-                      <strong class="me-1">{{ cook.first_name }} {{ cook.last_name }}</strong>
-                      <span class="text-muted small">@{{ cook.username }}</span>
-                    </a>
-                  </li>
-                {% endfor %}
-              </ul>
-            {% else %}
-              <div class="text-muted">No cooks assigned</div>
-            {% endif %}
-          </div>
+    {% if dish.description %}
+      <p class="text-secondary mb-4" style="font-size: 15px;">{{ dish.description }}</p>
+    {% endif %}
 
-          <div>
-            <h5 class="mb-2">Ingredients</h5>
-            {% if dish.ingredients.exists %}
-              <div class="d-flex flex-wrap gap-2">
-                {% for ingredient in dish.ingredients.all %}
-                  <span class="badge bg-light border text-dark">{{ ingredient.name }}</span>
-                {% endfor %}
-              </div>
-            {% else %}
-              <div class="text-muted">No ingredients</div>
-            {% endif %}
-          </div>
+    <div class="row g-4">
+      <div class="col-12 col-md-8">
+        <div class="mb-4">
+          <h5 class="mb-3 text-dark font-weight-bold" style="font-size: 18px;">Cooks</h5>
+          {% if dish.cooks.exists %}
+            <div class="d-flex flex-column gap-2">
+              {% for cook in dish.cooks.all %}
+                {% if cook.id %}
+                  <a href="{% url 'kitchen:cook-detail' cook.id %}" class="d-flex align-items-center gap-3 px-3 py-3 rounded-3 text-decoration-none bg-white border shadow-sm transition-all">
+                    <div class="rounded-circle text-white d-flex align-items-center justify-content-center fw-bold" style="width: 40px; height: 40px; font-size: 14px; background-color: #6c757d !important;">
+                      {% if cook.first_name and cook.last_name %}
+                        {{ cook.first_name.0 }}{{ cook.last_name.0 }}
+                      {% else %}
+                        {{ cook.username.0|upper }}
+                      {% endif %}
+                    </div>
+                    <div>
+                      <strong class="text-dark d-block" style="font-size: 16px;">
+                        {% if cook.first_name or cook.last_name %}
+                          {{ cook.first_name }} {{ cook.last_name }}
+                        {% else %}
+                          {{ cook.username }}
+                        {% endif %}
+                      </strong>
+                      <span class="text-muted" style="font-size: 13px;">@{{ cook.username }}</span>
+                    </div>
+                  </a>
+                {% endif %}
+              {% endfor %}
+            </div>
+          {% else %}
+            <div class="text-muted py-2" style="font-size: 14px;">No cooks assigned</div>
+          {% endif %}
         </div>
 
-        <div class="col-12 col-md-4">
-          <div class="border rounded p-3 h-100 d-flex flex-column justify-content-between bg-white">
-            <div>
-              <h6 class="mb-2">Details</h6>
-              <dl class="row mb-0">
-                <dt class="col-6 text-muted">Dish ID</dt>
-                <dd class="col-6">{{ dish.id }}</dd>
-
-                <dt class="col-6 text-muted">Price</dt>
-                <dd class="col-6">
-                  {% if dish.price %}
-                    <span class="fw-bold text-dark">{{ dish.price }} UAH</span>
-                  {% else %}
-                    —
-                  {% endif %}
-                </dd>
-              </dl>
+        <div>
+          <h5 class="mb-3 text-dark font-weight-bold" style="font-size: 18px;">Ingredients</h5>
+          {% if dish.ingredients.exists %}
+            <div class="d-flex flex-wrap gap-2">
+              {% for ingredient in dish.ingredients.all %}
+                <span class="badge bg-white border text-dark px-3 py-2 shadow-sm" style="border-radius: 20px; font-size: 14px; font-weight: 400;">{{ ingredient.name|capfirst }}</span>
+              {% endfor %}
             </div>
+          {% else %}
+            <div class="text-muted py-2" style="font-size: 14px;">No ingredients</div>
+          {% endif %}
+        </div>
+      </div>
 
-            <div class="mt-3">
-              <a href="{% url 'kitchen:dish-list' %}" class="btn btn-sm btn-outline-secondary w-100 mb-2">Back to dishes</a>
-              <a href="{% url 'kitchen:dish-create' %}" class="btn btn-sm btn-success w-100">Create new dish</a>
-            </div>
+      <div class="col-12 col-md-4">
+        <div class="border-0 rounded-4 p-4 h-100 d-flex flex-column justify-content-between shadow-sm bg-white">
+          <div>
+            <h6 class="mb-3 text-dark font-weight-bold" style="font-size: 18px;">Details</h6>
+            <dl class="row mb-0 gy-2" style="font-size: 14px;">
+              <dt class="col-6 text-muted fw-normal">Dish ID</dt>
+              <dd class="col-6 text-end fw-semibold text-dark">{{ dish.id }}</dd>
+
+              <dt class="col-6 text-muted fw-normal">Price</dt>
+              <dd class="col-6 text-end">
+                {% if dish.price %}
+                  <span class="fw-bold text-dark">{{ dish.price }} UAH</span>
+                {% else %}
+                  —
+                {% endif %}
+              </dd>
+            </dl>
+          </div>
+
+          <div class="mt-4 pt-3 border-top">
+            <a href="{% url 'kitchen:dish-list' %}" class="btn text-white w-100 py-2 fw-semibold shadow-sm text-center text-decoration-none mb-0" style="background-color: #343a40 !important; border-color: #343a40 !important; font-size: 14px; border-radius: 8px;">Back to dishes</a>
           </div>
         </div>
       </div>
