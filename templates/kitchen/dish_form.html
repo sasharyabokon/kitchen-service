@@ -4,7 +4,26 @@
   <h1>{{ object|yesno:"Update,Create" }} Dish</h1>
   <form action="" method="post" novalidate>
     {% csrf_token %}
-    {{ form|crispy }}
-    <input type="submit" value="Submit">
+
+    {{ form.name|as_crispy_field }}
+    {{ form.description|as_crispy_field }}
+    {{ form.price|as_crispy_field }}
+    {{ form.dish_type|as_crispy_field }}
+
+    <div class="mb-3">
+      <label>Cooks</label>
+      <div style="border:1px solid #ccc; padding:10px; max-height:150px; overflow-y:auto;">
+        {{ form.cooks }}
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label>Ingredients</label>
+      <div style="border:1px solid #ccc; padding:10px; max-height:200px; overflow-y:auto;">
+        {{ form.ingredients }}
+      </div>
+    </div>
+
+    <input type="submit" value="Submit" class="btn btn-primary">
   </form>
 {% endblock %}

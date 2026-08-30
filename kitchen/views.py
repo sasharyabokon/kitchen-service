@@ -6,8 +6,8 @@ from django.urls import reverse_lazy
 from django.views import generic
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
-from kitchen.forms import CookCreationForm, DishForm, CookUpdateForm, DishSearchForm
-from kitchen.models import Dish, DishType, Cook
+from kitchen.forms import CookCreationForm, DishForm, CookUpdateForm, DishSearchForm, IngredientSearchForm
+from kitchen.models import Dish, DishType, Cook, Ingredient
 
 
 @login_required
@@ -133,3 +133,44 @@ class CookDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Cook
     success_url = reverse_lazy("kitchen:cooks-list")
     template_name = "kitchen/cook_confirm_delete.html"
+
+
+class IngredientListView(LoginRequiredMixin, generic.ListView):
+    model = Ingredient
+    paginate_by = 10
+    success_url = reverse_lazy("kitchen:ingredient-list")
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(IngredientListView, self).get_context_data(**kwargs)
+        name = self.request.GET.get("name", "")
+        context["search_form"] = IngredientSearchForm(
+            initial={"name": name}
+        )
+        return context
+
+    def get_queryset(self):
+        queryset = Ingredient.objects.prefetch_related("dishes")
+        form = IngredientSearchForm(self.request.GET)
+        if form.is_valid():
+            return queryset.filter(name__icontains=form.cleaned_data["name"])
+        return queryset
+
+
+class IngredientCreateView(LoginRequiredMixin, generic.CreateView):
+    model = Ingredient
+    success_url = reverse_lazy("kitchen:ingredient-list")
+    template_name = "kitchen/ingredient_form.html"
+    fields = "__all__"
+
+
+class IngredientUpdateView(LoginRequiredMixin, generic.UpdateView):
+    model = Ingredient
+    success_url = reverse_lazy("kitchen:ingredient-list")
+    template_name = "kitchen/ingredient_form.html"
+    fields = "__all__"
+
+
+class IngredientDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = Ingredient
+    success_url = reverse_lazy("kitchen:ingredient-list")
+    template_name = "kitchen/ingredient_confirm_delete.html"
