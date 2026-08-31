@@ -119,6 +119,23 @@
   <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg">
 
     <div class="container-fluid py-4">
+      {% if messages %}
+        <div class="mb-4">
+          {% for message in messages %}
+            <div class="alert
+              {% if message.tags == 'success' %}alert-success text-white{% elif message.tags == 'error' or message.tags == 'danger' %}alert-danger text-white{% elif message.tags == 'warning' %}alert-warning text-dark{% else %}alert-info text-white{% endif %}
+              border-0 shadow-sm fade show mb-2"
+              role="alert"
+              style="border-radius: 0.75rem; background-color: {% if message.tags == 'success' %}#10B981{% elif message.tags == 'error' or message.tags == 'danger' %}#EF4444{% elif message.tags == 'warning' %}#F59E0B{% else %}#3B82F6{% endif %} !important; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;">
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="text-white font-weight-bold" style="font-size: 14px;">{{ message }}</span>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+
       {% block content %}
       {% endblock %}
 
@@ -132,5 +149,17 @@
   <script src="{% static 'assets/js/plugins/perfect-scrollbar.min.js' %}"></script>
   <script src="{% static 'assets/js/plugins/smooth-scrollbar.min.js' %}"></script>
   <script src="{% static 'assets/js/soft-ui-dashboard.min.js' %}"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      var alerts = document.querySelectorAll('.alert');
+      alerts.forEach(function(alert) {
+        setTimeout(function() {
+          var bsAlert = new bootstrap.Alert(alert);
+          bsAlert.close();
+        }, 4000);
+      });
+    });
+  </script>
 </body>
 </html>

@@ -1,7 +1,8 @@
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
-from django.http import HttpResponse, HttpRequest
+from django.http import HttpResponse, HttpRequest, HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.views import generic
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
@@ -55,6 +56,11 @@ class DishTypeCreateView(LoginRequiredMixin, generic.CreateView):
     success_url = reverse_lazy("kitchen:dish-type-list")
     template_name = "kitchen/dish_type_form.html"
 
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        messages.success(self.request, "Dish type successfully created!")
+        return response
+
 
 class DishTypeUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = DishType
@@ -62,11 +68,22 @@ class DishTypeUpdateView(LoginRequiredMixin, generic.UpdateView):
     success_url = reverse_lazy("kitchen:dish-type-list")
     template_name = "kitchen/dish_type_form.html"
 
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        messages.success(self.request, "Dish type successfully updated!")
+        return response
+
 
 class DishTypeDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = DishType
     success_url = reverse_lazy("kitchen:dish-type-list")
     template_name = "kitchen/dish_type_confirm_delete.html"
+
+    def form_valid(self, form):
+        success_url = self.get_success_url()
+        messages.success(self.request, "Dish type successfully deleted!")
+        self.object.delete()
+        return HttpResponseRedirect(success_url)
 
 
 class DishListView(LoginRequiredMixin, ListView):
@@ -96,17 +113,33 @@ class DishCreateView(LoginRequiredMixin, generic.CreateView):
     form_class = DishForm
     success_url = reverse_lazy("kitchen:dish-list")
 
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        messages.success(self.request, "Dish successfully created!")
+        return response
+
 
 class DishUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Dish
     form_class = DishForm
     success_url = reverse_lazy("kitchen:dish-list")
 
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        messages.success(self.request, "Dish successfully updated!")
+        return response
+
 
 class DishDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Dish
     success_url = reverse_lazy("kitchen:dish-list")
     template_name = "kitchen/dish_confirm_delete.html"
+
+    def form_valid(self, form):
+        success_url = self.get_success_url()
+        messages.success(self.request, "Dish successfully deleted!")
+        self.object.delete()
+        return HttpResponseRedirect(success_url)
 
 
 class DishDetailView(LoginRequiredMixin, generic.DetailView):
@@ -132,6 +165,12 @@ class CookListView(LoginRequiredMixin, generic.ListView):
 class CookCreateView(LoginRequiredMixin, generic.CreateView):
     model = Cook
     form_class = CookCreationForm
+    success_url = reverse_lazy("kitchen:cooks-list")
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        messages.success(self.request, "Cook successfully created!")
+        return response
 
 
 class CookDetailView(LoginRequiredMixin, generic.DetailView):
@@ -145,10 +184,21 @@ class CookUpdateView(LoginRequiredMixin, generic.UpdateView):
     form_class = CookUpdateForm
     success_url = reverse_lazy("kitchen:cooks-list")
 
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        messages.success(self.request, "Cook successfully updated!")
+        return response
+
 class CookDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Cook
     success_url = reverse_lazy("kitchen:cooks-list")
     template_name = "kitchen/cook_confirm_delete.html"
+
+    def form_valid(self, form):
+        success_url = self.get_success_url()
+        messages.success(self.request, "Cook successfully deleted!")
+        self.object.delete()
+        return HttpResponseRedirect(success_url)
 
 
 class IngredientListView(LoginRequiredMixin, generic.ListView):
@@ -178,6 +228,11 @@ class IngredientCreateView(LoginRequiredMixin, generic.CreateView):
     template_name = "kitchen/ingredient_form.html"
     fields = "__all__"
 
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        messages.success(self.request, "Ingredient successfully created!")
+        return response
+
 
 class IngredientUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Ingredient
@@ -185,8 +240,19 @@ class IngredientUpdateView(LoginRequiredMixin, generic.UpdateView):
     template_name = "kitchen/ingredient_form.html"
     fields = "__all__"
 
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        messages.success(self.request, "Ingredient successfully updated!")
+        return response
+
 
 class IngredientDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Ingredient
     success_url = reverse_lazy("kitchen:ingredient-list")
     template_name = "kitchen/ingredient_confirm_delete.html"
+
+    def form_valid(self, form):
+        success_url = self.get_success_url()
+        messages.success(self.request, "Ingredient successfully deleted!")
+        self.object.delete()
+        return HttpResponseRedirect(success_url)
