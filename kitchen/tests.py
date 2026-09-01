@@ -9,7 +9,10 @@ User = get_user_model()
 
 class DishSearchTests(TestCase):
     def setUp(self):
-        self.user = User.objects.create_user(username="roma", password="112322d")
+        self.user = (User.objects.create_user
+                     (username="roma",
+                      password="112322d")
+                     )
         self.client.login(username="roma", password="112322d")
         self.dish_type = DishType.objects.create(name="Dessert")
         self.ingredient = Ingredient.objects.create(name="Apple")
@@ -34,7 +37,8 @@ class DishSearchTests(TestCase):
         self.assertContains(response, "Banana Cake")
 
     def test_dish_list_with_search(self):
-        response = self.client.get(reverse("kitchen:dish-list"), {"name": "Apple"})
+        response = self.client.get(
+            reverse("kitchen:dish-list"), {"name": "Apple"})
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Apple Pie")
         self.assertNotContains(response, "Banana Cake")
@@ -49,19 +53,24 @@ class DishSearchTests(TestCase):
 
 class IngredientSearchTests(TestCase):
     def setUp(self):
-        self.user = User.objects.create_user(username="roma", password="112322d")
+        self.user = User.objects.create_user(
+            username="roma",
+            password="112322d"
+        )
         self.client.login(username="roma", password="112322d")
         self.ingredient1 = Ingredient.objects.create(name="Apple")
         self.ingredient2 = Ingredient.objects.create(name="Banana")
 
     def test_ingredient_list_without_search(self):
-        response = self.client.get(reverse("kitchen:ingredient-list"))
+        response = self.client.get(
+            reverse("kitchen:ingredient-list"))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Apple")
         self.assertContains(response, "Banana")
 
     def test_ingredient_list_with_search(self):
-        response = self.client.get(reverse("kitchen:ingredient-list"), {"name": "Apple"})
+        response = self.client.get(
+            reverse("kitchen:ingredient-list"), {"name": "Apple"})
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Apple")
         self.assertNotContains(response, "Banana")
@@ -69,10 +78,22 @@ class IngredientSearchTests(TestCase):
 
 class CookSearchTests(TestCase):
     def setUp(self):
-        self.user = User.objects.create_user(username="roma", password="112322d")
-        self.client.login(username="roma", password="112322d")
-        self.cook1 = Cook.objects.create(username="chef1", years_of_experience=5)
-        self.cook2 = Cook.objects.create(username="chef2", years_of_experience=10)
+        self.user = User.objects.create_user(
+            username="roma",
+            password="112322d"
+        )
+        self.client.login(
+            username="roma",
+            password="112322d"
+        )
+        self.cook1 = Cook.objects.create(
+            username="chef1",
+            years_of_experience=5
+        )
+        self.cook2 = Cook.objects.create(
+            username="chef2",
+            years_of_experience=10
+        )
 
     def test_cook_list_without_search(self):
         response = self.client.get(reverse("kitchen:cooks-list"))
@@ -81,7 +102,10 @@ class CookSearchTests(TestCase):
         self.assertContains(response, "chef2")
 
     def test_cook_list_with_search(self):
-        response = self.client.get(reverse("kitchen:cooks-list"), {"username": "chef1"})
+        response = self.client.get(
+            reverse(
+                "kitchen:cooks-list"), {"username": "chef1"}
+        )
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "chef1")
         self.assertNotContains(response, "chef2")
@@ -95,7 +119,10 @@ class CookSearchTests(TestCase):
 
 class DishTypeSearchTests(TestCase):
     def setUp(self):
-        self.user = User.objects.create_user(username="roma", password="112322d")
+        self.user = User.objects.create_user(
+            username="roma",
+            password="112322d"
+        )
         self.client.login(username="roma", password="112322d")
         self.type1 = DishType.objects.create(name="Dessert")
         self.type2 = DishType.objects.create(name="Main Course")
@@ -107,7 +134,8 @@ class DishTypeSearchTests(TestCase):
         self.assertContains(response, "Main Course")
 
     def test_dishtype_list_with_search(self):
-        response = self.client.get(reverse("kitchen:dish-type-list"), {"name": "Dessert"})
+        response = self.client.get(
+            reverse("kitchen:dish-type-list"), {"name": "Dessert"})
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Dessert")
         self.assertNotContains(response, "Main Course")

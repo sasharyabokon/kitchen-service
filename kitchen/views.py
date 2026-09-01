@@ -5,9 +5,14 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpRequest, HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.views import generic
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView
 
-from kitchen.forms import CookCreationForm, DishForm, CookUpdateForm, DishSearchForm, IngredientSearchForm
+from kitchen.forms import (CookCreationForm,
+                           DishForm,
+                           CookUpdateForm,
+                           DishSearchForm,
+                           IngredientSearchForm
+                           )
 from kitchen.models import Dish, DishType, Cook, Ingredient
 
 
@@ -188,6 +193,7 @@ class CookUpdateView(LoginRequiredMixin, generic.UpdateView):
         response = super().form_valid(form)
         messages.success(self.request, "Cook successfully updated!")
         return response
+
 
 class CookDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Cook
