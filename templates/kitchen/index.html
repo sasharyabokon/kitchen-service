@@ -1,0 +1,180 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<!-- Main Hero Banner with Overlaid Counters -->
+<div class="row mb-4">
+  <div class="col-12">
+    <!-- Graphite Background -->
+    <div class="card bg-dark text-white overflow-hidden shadow-lg border-0 rounded-3"
+         style="background-image: url('https://img.magnific.com/free-photo/delicious-food-buffet_23-2151949251.jpg?semt=ais_hybrid&w=740&q=80'); background-size: cover; background-position: center;">
+      <div class="card-body p-4 p-md-5 position-relative" style="background: linear-gradient(180deg, rgba(33,37,41,0.75) 0%, rgba(33,37,41,0.95) 100%);">
+
+        <!-- Header Text -->
+        <div class="mb-5 text-center text-md-start">
+          <h2 class="text-white font-weight-bolder display-6">Kitchen Service Management</h2>
+          <p class="text-white opacity-8 mb-2 fs-6">Welcome to the Kitchen Service management system. Use the sidebar menu to navigate through cooks, dishes, and categories.</p>
+          <!-- Steel colored quote -->
+          <p class="font-weight-bold fst-italic text-lg mb-0" style="color: #adb5bd;">“The kitchen is the heart of the restaurant.”</p>
+        </div>
+
+        <!-- Overlaid Counters Grid -->
+        <div class="row g-3">
+
+          <!-- Cooks -->
+          <div class="col-xl-3 col-sm-6">
+            <div class="card border-0" style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px);">
+              <div class="card-body p-3">
+                <div class="row align-items-center">
+                  <div class="col-8">
+                    <p class="text-xs mb-0 text-capitalize font-weight-bold text-white opacity-8">Cooks</p>
+                    <h4 class="font-weight-bolder text-white mb-0">{{ num_cooks }}</h4>
+                  </div>
+                  <div class="col-4 text-end">
+                    <div class="icon icon-shape bg-secondary shadow border-radius-md position-relative ms-auto">
+                      <i class="bi bi-people-fill text-white fs-4 position-absolute top-50 start-50 translate-middle"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dishes -->
+          <div class="col-xl-3 col-sm-6">
+            <div class="card border-0" style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px);">
+              <div class="card-body p-3">
+                <div class="row align-items-center">
+                  <div class="col-8">
+                    <p class="text-xs mb-0 text-capitalize font-weight-bold text-white opacity-8">Dishes</p>
+                    <h4 class="font-weight-bolder text-white mb-0">{{ num_dish }}</h4>
+                  </div>
+                  <div class="col-4 text-end">
+                    <div class="icon icon-shape bg-secondary shadow border-radius-md position-relative ms-auto">
+                      <i class="bi bi-egg-fried text-white fs-4 position-absolute top-50 start-50 translate-middle"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dish Types -->
+          <div class="col-xl-3 col-sm-6">
+            <div class="card border-0" style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px);">
+              <div class="card-body p-3">
+                <div class="row align-items-center">
+                  <div class="col-8">
+                    <p class="text-xs mb-0 text-capitalize font-weight-bold text-white opacity-8">Dish Types</p>
+                    <h4 class="font-weight-bolder text-white mb-0">{{ num_dish_types }}</h4>
+                  </div>
+                  <div class="col-4 text-end">
+                    <div class="icon icon-shape bg-secondary shadow border-radius-md position-relative ms-auto">
+                      <i class="bi bi-grid-fill text-white fs-4 position-absolute top-50 start-50 translate-middle"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Ingredients -->
+          <div class="col-xl-3 col-sm-6">
+            <div class="card border-0" style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px);">
+              <div class="card-body p-3">
+                <div class="row align-items-center">
+                  <div class="col-8">
+                    <p class="text-xs mb-0 text-capitalize font-weight-bold text-white opacity-8">Ingredients</p>
+                    <h4 class="font-weight-bolder text-white mb-0">{{ num_ingredients }}</h4>
+                  </div>
+                  <div class="col-4 text-end">
+                    <div class="icon icon-shape bg-secondary shadow border-radius-md position-relative ms-auto">
+                      <i class="bi bi-basket-fill text-white fs-4 position-absolute top-50 start-50 translate-middle"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Section 2: Visual Cards with Photos -->
+<div class="row mb-4">
+  <div class="col-md-4 mb-3 mb-md-0">
+    <div class="card text-white overflow-hidden border-0 shadow-sm rounded-3" style="height: 180px; background-image: url('https://images.unsplash.com/photo-1577219491135-ce391730fb2c?auto=format&fit=crop&w=600&q=80'); background-size: cover; background-position: center;">
+      <div class="card-body d-flex flex-column justify-content-end p-3" style="background: linear-gradient(0deg, rgba(33,37,41,0.9) 0%, rgba(33,37,41,0) 100%);">
+        <h5 class="text-white mb-1 font-weight-bold">Kitchen Staff</h5>
+        <p class="text-xs text-white opacity-8 mb-2">View active chefs and team members.</p>
+        <a href="{% url 'kitchen:cooks-list' %}" class="btn btn-sm btn-secondary text-white align-self-start mb-0">
+          Browse Cooks <i class="bi bi-arrow-right ms-1"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4 mb-3 mb-md-0">
+    <div class="card text-white overflow-hidden border-0 shadow-sm rounded-3" style="height: 180px; background-image: url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=600&q=80'); background-size: cover; background-position: center;">
+      <div class="card-body d-flex flex-column justify-content-end p-3" style="background: linear-gradient(0deg, rgba(33,37,41,0.9) 0%, rgba(33,37,41,0) 100%);">
+        <h5 class="text-white mb-1 font-weight-bold">Dishes & Menu</h5>
+        <p class="text-xs text-white opacity-8 mb-2">Explore available recipes and meals.</p>
+        <a href="{% url 'kitchen:dish-list' %}" class="btn btn-sm btn-secondary text-white align-self-start mb-0">
+          Browse Dishes <i class="bi bi-arrow-right ms-1"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="card text-white overflow-hidden border-0 shadow-sm rounded-3" style="height: 180px; background-image: url('https://images.unsplash.com/photo-1610832958506-aa56368176cf?auto=format&fit=crop&w=600&q=80'); background-size: cover; background-position: center;">
+      <div class="card-body d-flex flex-column justify-content-end p-3" style="background: linear-gradient(0deg, rgba(33,37,41,0.9) 0%, rgba(33,37,41,0) 100%);">
+        <h5 class="text-white mb-1 font-weight-bold">Pantry & Ingredients</h5>
+        <p class="text-xs text-white opacity-8 mb-2">Manage products and stock items.</p>
+        <a href="{% url 'kitchen:ingredient-list' %}" class="btn btn-sm btn-secondary text-white align-self-start mb-0">
+          View Ingredients <i class="bi bi-arrow-right ms-1"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Section 3: User Info & Visit Counter -->
+<div class="row">
+  <div class="col-md-8 mb-3 mb-md-0">
+    <div class="card shadow-sm border-0 h-100">
+      <div class="card-body p-4 d-flex align-items-center justify-content-between">
+        <div>
+          <h5 class="font-weight-bold mb-1">Logged in as: <span class="text-secondary">{{ user.username }}</span></h5>
+          <p class="text-sm text-secondary mb-0">Manage all internal restaurant services efficiently from this panel.</p>
+        </div>
+        <div class="text-end">
+          <!-- Active clickable steel button for User Profile -->
+          <a href="{% url 'kitchen:cook-detail' pk=user.id %}" class="btn btn-sm btn-outline-secondary mb-0 d-inline-flex align-items-center">
+            <i class="bi bi-person-badge text-secondary me-2 fs-6"></i>
+            {% if user.is_staff %} Administrator {% else %} Cook Staff {% endif %}
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="card shadow-sm border-0 h-100">
+      <div class="card-body p-4 d-flex align-items-center justify-content-between">
+        <div>
+          <p class="text-xs font-weight-bold text-uppercase text-secondary mb-1">Page Visits</p>
+          <h3 class="font-weight-bolder mb-0 text-dark">{{ num_visits }}</h3>
+        </div>
+        <div class="icon icon-shape bg-secondary shadow border-radius-md position-relative">
+          <i class="bi bi-eye-fill text-white fs-4 position-absolute top-50 start-50 translate-middle"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

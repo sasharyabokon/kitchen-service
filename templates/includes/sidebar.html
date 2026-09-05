@@ -1,0 +1,93 @@
+{% load static %}
+
+<aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 bg-white" id="sidenav-main">
+
+  <div class="sidenav-header py-3 px-3">
+    {% if user.is_authenticated %}
+      <div class="d-flex align-items-center gap-3 px-2">
+        <a href="{% url 'kitchen:cooks-detail' user.id %}" class="d-flex align-items-center gap-3 text-decoration-none flex-grow-1 overflow-hidden">
+          <div class="avatar avatar-sm rounded-circle text-white fw-bold d-flex align-items-center justify-content-center flex-shrink-0" style="width: 38px; height: 38px; background-color: #6c757d;">
+            {{ user.username|first|upper }}
+          </div>
+          <div class="text-start overflow-hidden">
+            <h6 class="mb-0 text-sm font-weight-bolder text-dark text-truncate">{{ user.username }}</h6>
+          </div>
+        </a>
+        <form action="{% url 'logout' %}" method="post" class="m-0 p-0 flex-shrink-0">
+          {% csrf_token %}
+          <a href="#" onclick="this.closest('form').submit(); return false;" class="text-danger text-xs fw-semibold text-decoration-none p-0 m-0">Logout</a>
+        </form>
+      </div>
+    {% else %}
+      <a class="btn btn-sm btn-secondary mb-0 w-80" href="{% url 'login' %}">Sign In</a>
+    {% endif %}
+  </div>
+
+  <hr class="horizontal dark mt-0 mb-2">
+
+  <div class="collapse navbar-collapse w-auto" id="sidenav-collapse-main">
+    <ul class="navbar-nav px-2">
+
+      <li class="nav-item mb-1">
+        <a class="nav-link d-flex align-items-center p-2 border-radius-md {% if request.resolver_match.url_name == 'index' %}active text-white shadow-sm{% endif %}"
+           {% if request.resolver_match.url_name == 'index' %}style="background-color: #495057; font-family: sans-serif;"{% else %}style="font-family: sans-serif;"{% endif %}
+           href="{% url 'kitchen:index' %}">
+          <div class="icon-sm border-radius-md text-center d-flex align-items-center justify-content-center flex-shrink-0"
+               style="width: 32px; height: 32px; background-color: #f8f9fa;">
+            <i class="bi bi-house-door-fill {% if request.resolver_match.url_name == 'index' %}text-dark{% else %}text-secondary{% endif %} text-sm"></i>
+          </div>
+          <span class="nav-link-text ms-3 font-weight-normal text-sm">Home</span>
+        </a>
+      </li>
+
+      <li class="nav-item mb-1">
+        <a class="nav-link d-flex align-items-center p-2 border-radius-md {% if 'dish' in request.path and 'type' not in request.path %}active text-white shadow-sm{% endif %}"
+           {% if 'dish' in request.path and 'type' not in request.path %}style="background-color: #495057; font-family: sans-serif;"{% else %}style="font-family: sans-serif;"{% endif %}
+           href="{% url 'kitchen:dish-list' %}">
+          <div class="icon-sm border-radius-md text-center d-flex align-items-center justify-content-center flex-shrink-0"
+               style="width: 32px; height: 32px; background-color: #f8f9fa;">
+            <i class="bi bi-journal-check {% if 'dish' in request.path and 'type' not in request.path %}text-dark{% else %}text-secondary{% endif %} text-sm"></i>
+          </div>
+          <span class="nav-link-text ms-3 font-weight-normal text-sm">Dishes</span>
+        </a>
+      </li>
+
+      <li class="nav-item mb-1">
+        <a class="nav-link d-flex align-items-center p-2 border-radius-md {% if 'dish-type' in request.path %}active text-white shadow-sm{% endif %}"
+           {% if 'dish-type' in request.path %}style="background-color: #495057; font-family: sans-serif;"{% else %}style="font-family: sans-serif;"{% endif %}
+           href="{% url 'kitchen:dish-type-list' %}">
+          <div class="icon-sm border-radius-md text-center d-flex align-items-center justify-content-center flex-shrink-0"
+               style="width: 32px; height: 32px; background-color: #f8f9fa;">
+            <i class="bi bi-grid-fill {% if 'dish-type' in request.path %}text-dark{% else %}text-secondary{% endif %} text-sm"></i>
+          </div>
+          <span class="nav-link-text ms-3 font-weight-normal text-sm">Dish Types</span>
+        </a>
+      </li>
+
+      <li class="nav-item mb-1">
+        <a class="nav-link d-flex align-items-center p-2 border-radius-md {% if 'cook' in request.path %}active text-white shadow-sm{% endif %}"
+           {% if 'cook' in request.path %}style="background-color: #495057; font-family: sans-serif;"{% else %}style="font-family: sans-serif;"{% endif %}
+           href="{% url 'kitchen:cooks-list' %}">
+          <div class="icon-sm border-radius-md text-center d-flex align-items-center justify-content-center flex-shrink-0"
+               style="width: 32px; height: 32px; background-color: #f8f9fa;">
+            <i class="bi bi-people-fill {% if 'cook' in request.path %}text-dark{% else %}text-secondary{% endif %} text-sm"></i>
+          </div>
+          <span class="nav-link-text ms-3 font-weight-normal text-sm">Cooks</span>
+        </a>
+      </li>
+
+      <li class="nav-item mb-1">
+        <a class="nav-link d-flex align-items-center p-2 border-radius-md {% if 'ingredient' in request.path %}active text-white shadow-sm{% endif %}"
+           {% if 'ingredient' in request.path %}style="background-color: #495057; font-family: sans-serif;"{% else %}style="font-family: sans-serif;"{% endif %}
+           href="{% url 'kitchen:ingredient-list' %}">
+          <div class="icon-sm border-radius-md text-center d-flex align-items-center justify-content-center flex-shrink-0"
+               style="width: 32px; height: 32px; background-color: #f8f9fa;">
+            <i class="bi bi-egg-fried {% if 'ingredient' in request.path %}text-dark{% else %}text-secondary{% endif %} text-sm"></i>
+          </div>
+          <span class="nav-link-text ms-3 font-weight-normal text-sm">Ingredients</span>
+        </a>
+      </li>
+
+    </ul>
+  </div>
+</aside>

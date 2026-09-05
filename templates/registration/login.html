@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Sign In - Kitchen Service{% endblock %}
+
+{% block content %}
+<!-- Top navigation bar -->
+<div class="container position-sticky z-index-sticky top-0">
+  <div class="row">
+    <div class="col-12">
+      <nav class="navbar navbar-expand-lg blur blur-rounded top-0 z-index-3 shadow position-absolute my-3 py-2 start-0 end-0 mx-4" style="background-color: rgba(255, 255, 255, 0.4) !important; backdrop-filter: saturate(200%) blur(20px);">
+        <div class="container-fluid pe-0">
+          <a class="navbar-brand font-weight-bolder ms-lg-0 ms-3 text-dark" href="{% url 'kitchen:index' %}">
+            Kitchen Service
+          </a>
+          <div class="collapse navbar-collapse justify-content-end" id="navigation">
+            <ul class="navbar-nav align-items-center">
+              <li class="nav-item me-2">
+                <a href="https://docs.djangoproject.com/" target="_blank" class="btn btn-round btn-sm mb-0 btn-outline-dark">Django docs</a>
+              </li>
+              <li class="nav-item">
+                <a href="https://github.com/sasharyabokon/kitchen-service" target="_blank" class="btn btn-sm btn-round mb-0 text-white" style="background-image: linear-gradient(310deg, #10B981 0%, #059669 100%); border: none;">Project on GitHub</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </div>
+</div>
+
+<!-- Split screen layout -->
+<main class="main-content mt-0 ps">
+  <div class="container-fluid" style="min-height: 100vh;">
+    <div class="row h-100 min-vh-100 align-items-center">
+
+      <!-- Left column: Translucent Sidebar -->
+      <div class="col-lg-6 col-md-12 d-flex flex-column justify-content-center align-items-center px-lg-5 min-vh-100"
+           style="background-color: rgba(255, 255, 255, 0.8); backdrop-filter: blur(20px); border-right: 1px solid rgba(0,0,0,0.05);">
+
+        <div class="w-75 mx-auto" style="max-width: 400px;">
+          <div class="text-left mb-4">
+            <h3 class="font-weight-bolder text-gradient mb-1" style="background-image: linear-gradient(310deg, #10B981 0%, #059669 100%); font-size: 32px;">Sign In</h3>
+            <p class="text-secondary text-sm">Add your credentials</p>
+          </div>
+
+          <form role="form" method="post" action="">
+            {% csrf_token %}
+
+            {% if form.errors %}
+              <div class="alert alert-danger text-white text-sm py-2 mb-3" style="border-radius: 0.75rem; background-color: #EF4444 !important;">
+                Your username and password didn't match. Please try again.
+              </div>
+            {% endif %}
+
+            <div class="mb-3">
+              <input type="text" name="username" class="form-control" placeholder="admin" aria-label="Username" required style="border-radius: 0.5rem; border: 1px solid #E5E7EB; padding: 0.75rem;">
+            </div>
+
+            <div class="mb-3">
+              <input type="password" name="password" class="form-control" placeholder="••••••••" aria-label="Password" required style="border-radius: 0.5rem; border: 1px solid #E5E7EB; padding: 0.75rem;">
+            </div>
+
+            <div class="form-check form-switch ps-0 mb-4">
+              <input class="form-check-input ms-0" type="checkbox" id="rememberMe">
+              <label class="form-check-label text-body ms-2" for="rememberMe">Remember me</label>
+            </div>
+
+            <div class="text-center">
+              <button type="submit" class="btn w-100 mb-0 text-white shadow-sm" style="background-image: linear-gradient(310deg, #10B981 0%, #059669 100%); border-radius: 0.5rem; font-weight: 600; padding: 0.75rem; border: none;">SIGN IN</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Right column: Background image with rounded corners -->
+      <div class="col-lg-6 col-md-12 h-100 min-vh-100 position-relative p-0"
+           style="background-image: url('https://images.unsplash.com/photo-1663790776790-680c6282da2d?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); background-size: cover; background-position: center; background-repeat: no-repeat; border-radius: 1rem; overflow: hidden;">
+
+        <div class="d-flex flex-column justify-content-center align-items-center text-center h-100 w-100 position-relative z-index-1 p-5 text-white" style="padding-top: 300px !important;">
+          <h2 class="text-white font-weight-bolder mb-2">Kitchen Management System</h2>
+          <p class="text-white opacity-8 mb-4">Efficiently manage cooks, dishes, and professional workflows.</p>
+          <p class="text-white text-xs opacity-7">© Kitchen Service</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</main>
+{% endblock %}
