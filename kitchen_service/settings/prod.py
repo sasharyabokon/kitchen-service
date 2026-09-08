@@ -1,9 +1,12 @@
+import os
 from kitchen_service.settings.base import *
 
 # SECURITY WARNING: don"t run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["kitchen-service-e4jo.onrender.com"]
+ALLOWED_HOSTS = ["kitchen-service-e4jo.onrender.com",
+    "127.0.0.1",
+    "localhost",]
 
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME:
