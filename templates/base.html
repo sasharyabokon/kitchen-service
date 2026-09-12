@@ -109,6 +109,19 @@
     a:hover {
       color: #10B981 !important;
     }
+
+    /* Мобільні стилі для відображення сайдбару через бургер-меню */
+    @media (max-width: 1199.98px) {
+      .g-sidenav-show .sidenav {
+        transform: translateX(-17.125rem);
+      }
+      .g-sidenav-show.g-sidenav-pinned .sidenav {
+        transform: translateX(0) !important;
+      }
+      .main-content {
+        margin-left: 0 !important;
+      }
+    }
   </style>
 </head>
 
@@ -117,6 +130,28 @@
   {% include "includes/sidebar.html" %}
 
   <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg">
+
+    <!-- Мобільна панель навігації з кнопкою гамбургера -->
+    <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl d-xl-none mt-3 bg-white px-3" id="navbarBlur" navbar-scroll="true">
+      <div class="container-fluid py-1 px-2">
+        <nav aria-label="breadcrumb">
+          <h6 class="font-weight-bolder mb-0 text-dark">Kitchen Service</h6>
+        </nav>
+        <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4 justify-content-end" id="navbar">
+          <ul class="navbar-nav justify-content-end">
+            <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
+              <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
+                <div class="sidenav-toggler-inner">
+                  <i class="sidenav-toggler-line bg-dark"></i>
+                  <i class="sidenav-toggler-line bg-dark"></i>
+                  <i class="sidenav-toggler-line bg-dark"></i>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
 
     <div class="container-fluid py-4">
       {% if messages %}
