@@ -1,4 +1,3 @@
-import os
 from kitchen_service.settings.base import *
 
 # SECURITY WARNING: don"t run with debug turned on in production!
@@ -25,4 +24,10 @@ DATABASES = {
         "HOST": os.getenv("POSTGRES_HOST"),
         "PORT": int(os.getenv("POSTGRES_DB_PORT")),
     }
+}
+
+STORAGES = {
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
 }
